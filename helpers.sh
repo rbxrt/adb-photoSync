@@ -49,6 +49,10 @@ progress_bar() {
 
     # Print progress bar
     printf "\r[%-*s] %3d%%" "$width" "$(printf '#%.0s' $(seq 1 $completed))" "$((progress * 100 / total))"
+    # Add a newline when progress reaches 100%
+    if [ "$progress" -eq "$total" ]; then
+        echo
+    fi
 }
 
 init_connection() {
