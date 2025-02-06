@@ -25,11 +25,16 @@ copy_to_computer() {
     trap 'adb -s "$DEVICE_ID" shell settings put global stay_on_while_plugged_in 0' EXIT # Restore original stay awake setting
 
     # Sync each file while preserving folder structure
-    FILES=$(adb -s "$DEVICE_ID" shell "find '$SRC_DIR' -type f ! -path '*/.*' \( -iname '*.jpg' -o -iname '*.mp4' \)" | tr -d '\r')
+    FILES=$(adb -s "$DEVICE_ID" shell "find '$SRC_DIR' -type f ! -path '*/.*' \( -iname '*.jpg' -o -iname '*.mp4' -o -iname '*.gif' \)" | tr -d '\r')
+
+    # Progress
+    FILE_COUNT=$(echo "$FILES" | wc -l | tr -d ' ')
+    NUM=0  # Initialize index
 
     while IFS= read -r FILE; do
         REL_PATH=${FILE#"$SRC_DIR/"}  # Remove the base path
         LOCAL_PATH="$DEST_DIR/$REL_PATH"
+        NUM=$(( $NUM + 1 ))
 
         if $DRY_RUN; then
             # Skip when dry-run is active
@@ -47,8 +52,11 @@ copy_to_computer() {
                 continue  # Skip this file on error and continue with next
             fi
 
+            progress_bar "$NUM" "$FILE_COUNT"
+
         fi
 
     done <<< "$FILES"
+
     exit 0
 }

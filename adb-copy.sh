@@ -46,7 +46,7 @@ copy_to_phone() {
     # Collect all eligible files
     for DIR in "${SOURCE_DIRS[@]}"; do
         if [ -d "$DIR" ]; then
-            find "$DIR" -type f \( -iname "*.jpg" -o -iname "*.mp4" \) ! -name "._*" ! -name "*~" -exec stat -f "%m %N" {} + >> "$TEMP_FILE"
+            find "$DIR" -type f \( -iname "*.jpg" -o -iname "*.mp4" -o -iname '*.gif' \) ! -name "._*" ! -name "*~" -exec stat -f "%m %N" {} + >> "$TEMP_FILE"
         else
             throw_error "❌ Source directory \"$DIR\" does not exist or is not accessible."
         fi

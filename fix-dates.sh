@@ -19,7 +19,6 @@ process_file() {
 
     # Änderungsdatum setzen
     touch -t "$(date -j -f "%Y%m%d %H%M%S" "$datetime" "+%Y%m%d%H%M.%S")" "$file"
-
 }
 
 export -f process_file
@@ -36,12 +35,12 @@ fix_dates() {
 
     # Argumente verarbeiten
     while [[ $# -gt 0 ]]; do
-    case "$1" in
-        -b|--batch) batch_size="$2"; shift 2 ;;
-        -p|--parallel) parallel_jobs="$2"; shift 2 ;;
-        -f|--folders) shift; while [[ $# -gt 0 && ! "$1" =~ ^- ]]; do folders+=("$1"); shift; done ;;
-        *) throw_error "Unknown argument: $1" ;;
-    esac
+        case "$1" in
+            -b|--batch) batch_size="$2"; shift 2 ;;
+            -p|--parallel) parallel_jobs="$2"; shift 2 ;;
+            -f|--folders) shift; while [[ $# -gt 0 && ! "$1" =~ ^- ]]; do folders+=("$1"); shift; done ;;
+            *) throw_error "Unknown argument: $1" ;;
+        esac
     done
 
     if [[ ${#folders[@]} -eq 0 ]]; then
@@ -49,18 +48,20 @@ fix_dates() {
     fi
 
     for folder in "${folders[@]}"; do
-    if [ ! -d "$folder" ]; then
-        echo "❌ Folder not found: $folder" >&2
-        continue
-    fi
+        if [ ! -d "$folder" ]; then
+            echo "❌ Folder not found: $folder" >&2
+            continue
+        fi
 
-    echo "🔍 Process folder: \"$folder\""
+        echo "🔍 Process folder: \"$folder\""
 
-    find "$folder" -type f \( -iname "*.jpg" -o -iname "*.mp4" \) -print0 |
-        grep -zE '/[0-9]{8}_[0-9]{6}\.(jpg|mp4)$' |
-        xargs -0 -P "$parallel_jobs" -n "$batch_size" bash -c 'for file; do process_file "$file"; done' _
+        find "$folder" -type f \( -iname "*.jpg" -o -iname "*.mp4" \) -print0 |
+            grep -zE '/[0-9]{8}_[0-9]{6}.*\.(jpg|mp4)$' |
+            xargs -0 -P "$parallel_jobs" -n "$batch_size" bash -c 'for file; do process_file "$file"; done' _
 
-    # find "$folder" -type f -name '._*' -exec rm {} \;
-done
+        # find "$folder" -type f -name '._*' -exec rm {} \;
+    done
+
+    exit 0
 
 }

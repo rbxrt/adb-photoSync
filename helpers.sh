@@ -13,11 +13,11 @@ Usage:
 
 Examples:
     ${0##*/} push ~/Pictures /scdard/DCIM
-        Copies all images to the phone.
+        Copies all images from your Pictures folder to the phone.
         Supports the optional '-dry-run' flag as the first argument. Shows what the script would do without executing the action.
 
-    ${0##*/} pull /sdcard/Pictures
-        Copies all images from the phone to the default dir ($HOME/Pictures/PhotoSyn).
+    ${0##*/} pull /sdcard/Pictures <destination>
+        Copies all images from the phone to the specified folder on your computer (default: $HOME/Pictures/PhotoSync).
         Supports the optional '-dry-run' attribute as the first argument. Shows what the script would do without executing the action.
 
     ${0##*/} fix-dates -f ~/Pictures/MyAlbum
