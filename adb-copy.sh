@@ -34,6 +34,9 @@ copy_to_phone() {
         SOURCE_DIRS[$i]="${SOURCE_DIRS[$i]%/}" # Remove trailing slash
     done
 
+    echo "⏳ Copying Computer:$SOURCE_DIRS → Phone:$DEST_PATH"
+
+
     # Ensure device stays awake during transfer
     adb -s "$DEVICE_ID" shell settings put global stay_on_while_plugged_in 3
 
