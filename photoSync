@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# Author: rbxrt
+# License: MIT
+
+SCRIPT_DIR="$(dirname "$(realpath "$0")")"
+
+# Import modules
+source "$SCRIPT_DIR/adb-copy.sh"
+source "$SCRIPT_DIR/adb-pull.sh"
+source "$SCRIPT_DIR/fix-dates.sh"
+source "$SCRIPT_DIR/helpers.sh"
+
+# Script terminates in case of errors or the use of undefined variables
+set -euo pipefail
+
+# Check if a command was provided
+if [[ $# -eq 0 ]]; then
+    usage
+    exit 1
+fi
+
+COMMAND=$1
+shift # Remove the command from arguments
+
+# Execute the corresponding function
+case "$COMMAND" in
+    init) init_connection ;;
+    push) copy_to_phone "$@" ;;
+    pull) copy_to_computer "$@" ;;
+    fix-dates) fix_dates "$@" ;;
+    *) echo "Unknown command: $COMMAND"; usage; exit 1 ;;
+esac
