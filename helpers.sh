@@ -20,7 +20,7 @@ Examples:
         Copies all images from the phone to the specified folder on your computer (default: $HOME/Pictures/PhotoSync).
         Supports the optional '-dry-run' attribute as the first argument. Shows what the script would do without executing the action.
 
-    ${0##*/} fix-dates -f ~/Pictures/MyAlbum
+    ${0##*/} fix-timestamps -f ~/Pictures/MyAlbum
         Fixes the creation and modification date of all photos in 'MyAlbum' when the filemane matches yyyyMMdd_HHmmss.jpg
         The -f argument defines the list of folders to be fixed.
         Optionally, you can specify the batch size (-b) and the number of parallel jobs (-p).

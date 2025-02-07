@@ -8,7 +8,7 @@ SCRIPT_DIR="$(dirname "$(realpath "$0")")"
 # Import modules
 source "$SCRIPT_DIR/adb-copy.sh"
 source "$SCRIPT_DIR/adb-pull.sh"
-source "$SCRIPT_DIR/fix-dates.sh"
+source "$SCRIPT_DIR/fix-timestamps.sh"
 source "$SCRIPT_DIR/helpers.sh"
 
 # Script terminates in case of errors or the use of undefined variables
@@ -28,6 +28,6 @@ case "$COMMAND" in
     init) init_connection ;;
     push) copy_to_phone "$@" ;;
     pull) copy_to_computer "$@" ;;
-    fix-dates) fix_dates "$@" ;;
+    fix-timestamps) fix_timestamps "$@" ;;
     *) echo "Unknown command: $COMMAND"; usage; exit 1 ;;
 esac

@@ -23,7 +23,7 @@ process_file() {
 
 export -f process_file
 
-fix_dates() {
+fix_timestamps() {
 
     # default values
     batch_size=100
@@ -55,8 +55,8 @@ fix_dates() {
 
         echo "🔍 Process folder: \"$folder\""
 
-        find "$folder" -type f \( -iname "*.jpg" -o -iname "*.mp4" \) -print0 |
-            grep -zE '/[0-9]{8}_[0-9]{6}.*\.(jpg|mp4)$' |
+        find "$folder" -type f \( -iname "*.jpg" -o -iname "*.mp4" -o -iname "*.gif" \) -print0 |
+            grep -zE '/[0-9]{8}_[0-9]{6}.*\.(jpg|mp4|gif)$' |
             xargs -0 -P "$parallel_jobs" -n "$batch_size" bash -c 'for file; do process_file "$file"; done' _
 
         # find "$folder" -type f -name '._*' -exec rm {} \;

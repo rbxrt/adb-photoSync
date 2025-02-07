@@ -34,7 +34,7 @@ copy_to_phone() {
         SOURCE_DIRS[$i]="${SOURCE_DIRS[$i]%/}" # Remove trailing slash
     done
 
-    echo "⏳ Copying Computer:$SOURCE_DIRS → Phone:$DEST_PATH"
+    echo "⏳ Copying from Computer → Phone:$DEST_PATH"
 
 
     # Ensure device stays awake during transfer

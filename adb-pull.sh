@@ -18,7 +18,7 @@ copy_to_computer() {
     SOURCE_DIR=${1:-/sdcard/DCIM}
     DEST_PATH=${2:-$HOME/Pictures/PhotoSync}
 
-    echo "⏳ Copying Phone:$SOURCE_DIR → Computer:$DEST_PATH"
+    echo "⏳ Copying from Phone:$SOURCE_DIR → Computer:$DEST_PATH"
 
     # Ensure device stays awake during transfer
     adb -s "$DEVICE_ID" shell settings put global stay_on_while_plugged_in 3
