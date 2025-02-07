@@ -14,10 +14,10 @@ process_file() {
 
     formatted_date=$(date -j -f "%Y%m%d %H%M%S" "$datetime" "+%m/%d/%Y %H:%M:%S")
 
-    # Erstellungsdatum setzen
+    # Set creation date
     SetFile -d "$formatted_date" "$file"
 
-    # Änderungsdatum setzen
+    # Set modification date
     touch -t "$(date -j -f "%Y%m%d %H%M%S" "$datetime" "+%Y%m%d%H%M.%S")" "$file"
 }
 

@@ -19,7 +19,7 @@ Basic knowledge of Android, adb, and terminal operations is required.
 ## Usage
 
 - Connect your phone to your Mac
-    - Wireless connection might also be possible but this is not tested and will be much slower.
+    - Wireless connection might also work but will be much slower.
 - The tool provides 3 functionalities:
     - ```photoSync pull``` to transfer photos from your phone to your computer.
     - ```photoSync push``` to transfer photos from your computer to your phone
@@ -49,6 +49,9 @@ The tool handles ```.jpg```, ```.mp4```, and ```.gif``` files. If you need suppo
 ## Benchmark:
 Tested on Samsung Galaxy S21, S25 and MacBook Pro (M1)
 
-- Pushing 11,000 photos (~60 GB) took about 20 minutes on the S25 and 45 minutes on the S21.
+- Pushing 11,000 photos (~60 GB) took about 20 minutes on the S25 and 45 minutes on the S21, and it worked like a charm.
 - Pulling photos from your phone to your computer is much faster.
 - Fixing the timestamps is done in minutes.
+
+---
+Created with :heart: by rbxrt, inspired by optimistiCli's [adb-copy](https://github.com/optimistiCli/adb-copy)

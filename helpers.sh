@@ -12,17 +12,17 @@ Usage:
     Requires Android SDK Platform Tools. The adb executable must be on the \$PATH.
 
 Examples:
-    ${0##*/} push ~/Pictures /scdard/DCIM
-        Copies all images from your Pictures folder to the phone.
-        Supports the optional '-dry-run' flag as the first argument. Shows what the script would do without executing the action.
+    ${0##*/} push [-dry-run] ~/Pictures ~/My\ Images /scdard/DCIM
+        Copies all photos from your /Pictures and /My Images folders to your phone.
+        Supports the optional '-dry-run' flag as the first argument.
 
-    ${0##*/} pull /sdcard/Pictures <destination>
-        Copies all images from the phone to the specified folder on your computer (default: $HOME/Pictures/PhotoSync).
-        Supports the optional '-dry-run' attribute as the first argument. Shows what the script would do without executing the action.
+    ${0##*/} pull [-dry-run] /sdcard/Pictures <destination>
+        Copies all photos from the phone's Pictures folder to the specified destination on your computer (default: $HOME/Pictures/PhotoSync).
+        Supports the optional '-dry-run' attribute as the first argument.
 
-    ${0##*/} fix-timestamps -f ~/Pictures/MyAlbum
-        Fixes the creation and modification date of all photos in 'MyAlbum' when the filemane matches yyyyMMdd_HHmmss.jpg
-        The -f argument defines the list of folders to be fixed.
+    ${0##*/} fix-timestamps -f ~/Pictures/MyAlbum ~/Pictures/MyAlbum2
+        Fixes the creation and modification date of all photos in 'MyAlbum', and 'MyAlbum2' when the filemane matches yyyyMMdd_HHmmss*.jpg|mp4|gif
+        The -f argument defines the list of folders to be fixed. All subfolders were included.
         Optionally, you can specify the batch size (-b) and the number of parallel jobs (-p).
 EOU
 }
@@ -34,9 +34,7 @@ throw_error () {
 		ERR_MESSAGE='❌ Something went wrong.'
 	fi
 
-	echo "Error: $ERR_MESSAGE"$'\n' >&2
-    usage >&2
-
+	echo "Error: $ERR_MESSAGE" >&2
 	exit 1
 }
 
@@ -63,7 +61,7 @@ init_connection() {
     fi
 
     # Get device serial
-    CONNECTED_DEVICES=("$(adb devices | grep '\t' | sed $'s/\t.*//')")
+    CONNECTED_DEVICES=($(adb devices | awk 'NR>1 && /device$/ {print $1}'))
     SERIAL=''
 
     if [ ${#CONNECTED_DEVICES[@]} -eq 1 ]; then
@@ -78,7 +76,4 @@ init_connection() {
     export DEVICE_ID="$SERIAL"
 
     echo "✅ $DEVICE_BRAND device with s/n $DEVICE_ID found"
-
-    # exit 0
-
 }

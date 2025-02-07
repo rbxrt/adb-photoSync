@@ -27,7 +27,7 @@ copy_to_computer() {
     # Sync each file while preserving folder structure
     FILES=$(adb -s "$DEVICE_ID" shell "find '$SOURCE_DIR' -type f ! -path '*/.*' \( -iname '*.jpg' -o -iname '*.mp4' -o -iname '*.gif' \)" | tr -d '\r')
 
-    # Progress
+    # Initialize parameters for progress bar
     FILE_COUNT=$(echo "$FILES" | wc -l | tr -d ' ')
     NUM=0  # Initialize index
 

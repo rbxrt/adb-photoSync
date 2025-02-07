@@ -58,7 +58,7 @@ copy_to_phone() {
     # Sort files by modification date
     SORTED_FILES=$(sort -n "$TEMP_FILE" | cut -d' ' -f2-)
 
-    # Progress
+    # Initialize parameters for progress bar
     FILE_COUNT=$(echo "$SORTED_FILES" | wc -l | tr -d ' ')
     NUM=0  # Initialize index
 
